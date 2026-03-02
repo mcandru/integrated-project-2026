@@ -15,11 +15,11 @@ git fetch upstream
 echo.
 
 echo Updating docs and examples folders...
-git checkout upstream/master -- docs/ examples/
+git checkout upstream/master -- docs/ src/examples/
 echo.
 
 echo All done! Your docs and examples folders have been updated.
 echo You can commit this change with:
-echo   git add docs/ examples/
+echo   git add docs/ src/examples/
 echo   git commit -m "Update docs and examples from template"
 echo.
