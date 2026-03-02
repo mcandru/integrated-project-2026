@@ -45,7 +45,7 @@ $categories = Category::findAll();
                 <p>Article text is often too long for a card preview. <code>substr($string, 0, 100)</code> grabs the first 100 characters. Use <code>strlen()</code> to check whether the text is actually longer before adding &ldquo;&hellip;&rdquo; so short text doesn&rsquo;t get a misleading ellipsis.</p>
             </div>
 
-            <?php foreach (array_slice($stories, 0, 3) as $story): ?>
+            <?php foreach (array_slice($stories, 0, 3) as $story) { ?>
                 <div class="width-4">
                     <h4><?= htmlspecialchars($story->headline) ?></h4>
                     <?php
@@ -60,7 +60,7 @@ $categories = Category::findAll();
                     <p><?= htmlspecialchars($preview) ?></p>
                     <p><small>Length: <?= strlen($text) ?> chars &rarr; showing <?= min(strlen($text), $limit) ?></small></p>
                 </div>
-            <?php endforeach; ?>
+            <?php } ?>
         </div>
     </body>
 </html>
