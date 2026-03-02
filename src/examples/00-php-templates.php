@@ -24,9 +24,9 @@ try {
 
             <?php foreach ($featured_stories as $index => $story) { ?>
                 <div class="<?= $index === 0 ? 'width-8 featured' : 'width-4'; ?>">
-                    <?php if ($story->img_url): ?>
+                    <?php if ($story->img_url) { ?>
                         <img src="<?= "../" . htmlspecialchars($story->img_url) ?>" alt="">
-                    <?php endif; ?>
+                    <?php } ?>
                     <h3><?= htmlspecialchars($story->headline) ?></h3>
                     <p><?= htmlspecialchars($story->subheadline) ?></p>
                 </div>
@@ -39,9 +39,9 @@ try {
 
             <div class="width-12 spotlight-row">
                 <div class="spotlight featured">
-                    <?php if ($featured_stories[0]->img_url): ?>
+                    <?php if ($featured_stories[0]->img_url) { ?>
                         <img src="<?= "../" . htmlspecialchars($featured_stories[0]->img_url) ?>" alt="">
-                    <?php endif; ?>
+                    <?php } ?>
                     <h2><?= htmlspecialchars($featured_stories[0]->headline) ?></h2>
                     <p><?= htmlspecialchars($featured_stories[0]->subheadline) ?></p>
                 </div>
@@ -73,44 +73,6 @@ try {
                     </div>
                 <?php } ?>
             <?php } ?>
-
-            <!-- Example 4: Alternating spotlight per category -->
-            <div class="width-12"><h2>Example 4: Alternating spotlight per category</h2></div>
-
-            <?php foreach ($categories as $cat_index => $category): ?>
-                <?php
-                  $cat_stories = Story::findByCategory(
-                    $category->id,
-                    ["limit" => 4, "order_by" => "created_at", "order" => "DESC"],
-                  );
-                ?>
-                <?php if (count($cat_stories) === 0) continue; ?>
-                <?php $spotlight = $cat_stories[0]; ?>
-                <?php $remaining = array_slice($cat_stories, 1); ?>
-
-                <div class="width-12">
-                    <h3><?= htmlspecialchars($category->name) ?></h3>
-                </div>
-
-                <!-- Spotlight on one side, story list on the other — flips per category -->
-                <div class="width-12 spotlight-row <?php if ($cat_index % 2 !== 0): ?>flip<?php endif; ?>">
-                    <div class="spotlight featured">
-                        <?php if ($spotlight->img_url): ?>
-                            <img src="<?= "../" . htmlspecialchars($spotlight->img_url) ?>" alt="">
-                        <?php endif; ?>
-                        <h3><?= htmlspecialchars($spotlight->headline) ?></h3>
-                        <p><?= htmlspecialchars($spotlight->subheadline) ?></p>
-                    </div>
-                    <div class="story-list">
-                        <?php for ($i = 1; $i < count($cat_stories); $i++): ?>
-                            <div>
-                                <h4><?= htmlspecialchars($cat_stories[$i]->headline) ?></h4>
-                                <p><?= htmlspecialchars($cat_stories[$i]->subheadline) ?></p>
-                            </div>
-                        <?php endfor; ?>
-                    </div>
-                </div>
-            <?php endforeach; ?>
         </div>
     </body>
 </html>
