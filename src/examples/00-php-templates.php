@@ -3,8 +3,6 @@ require_once "../lib/config.php";
 
 try {
     $featured_stories = Story::findAll(["limit" => 5, "order_by" => "updated_at", "order" => "DESC"]);
-    $spotlight = $featured_stories[0];
-    $sidebar_stories = array_slice($featured_stories, 1);
     $categories = Category::findAll();
 } catch (Exception $e) {
     echo $e->getMessage();
@@ -41,14 +39,14 @@ try {
 
             <div class="width-12 spotlight-row">
                 <div class="spotlight featured">
-                    <?php if ($spotlight->img_url): ?>
-                        <img src="<?= "../" . htmlspecialchars($spotlight->img_url) ?>" alt="">
+                    <?php if ($featured_stories[0]->img_url): ?>
+                        <img src="<?= "../" . htmlspecialchars($featured_stories[0]->img_url) ?>" alt="">
                     <?php endif; ?>
-                    <h2><?= htmlspecialchars($spotlight->headline) ?></h2>
-                    <p><?= htmlspecialchars($spotlight->subheadline) ?></p>
+                    <h2><?= htmlspecialchars($featured_stories[0]->headline) ?></h2>
+                    <p><?= htmlspecialchars($featured_stories[0]->subheadline) ?></p>
                 </div>
                 <div class="story-list">
-                    <?php foreach ($sidebar_stories as $story) { ?>
+                    <?php foreach (array_slice($featured_stories, 1) as $story) { ?>
                         <div>
                             <h4><?= htmlspecialchars($story->headline) ?></h4>
                             <p><?= htmlspecialchars($story->subheadline) ?></p>
