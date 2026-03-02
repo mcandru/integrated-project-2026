@@ -3,6 +3,8 @@ require_once "../lib/config.php";
 
 try {
     $featured_stories = Story::findAll(["limit" => 5, "order_by" => "updated_at", "order" => "DESC"]);
+    $spotlight = $featured_stories[0];
+    $sidebar_stories = array_slice($featured_stories, 1);
     $categories = Category::findAll();
 } catch (Exception $e) {
     echo $e->getMessage();
@@ -32,8 +34,31 @@ try {
                 </div>
             <?php } ?>
 
-            <!-- Example 2: Category sections with nested loops -->
-            <div class="width-12"><h2>Example 2: Stories by category</h2></div>
+            <!-- Example 2: Spotlight + featured grid -->
+            <!-- Rule of thumb: use one loop when item structure is the same, split
+             when layout containers differ significantly (like here) -->
+            <div class="width-12"><h2>Example 2: Spotlight + featured grid</h2></div>
+
+            <div class="width-12 spotlight-row">
+                <div class="spotlight featured">
+                    <?php if ($spotlight->img_url): ?>
+                        <img src="<?= "../" . htmlspecialchars($spotlight->img_url) ?>" alt="">
+                    <?php endif; ?>
+                    <h2><?= htmlspecialchars($spotlight->headline) ?></h2>
+                    <p><?= htmlspecialchars($spotlight->subheadline) ?></p>
+                </div>
+                <div class="story-list">
+                    <?php foreach ($sidebar_stories as $story) { ?>
+                        <div>
+                            <h4><?= htmlspecialchars($story->headline) ?></h4>
+                            <p><?= htmlspecialchars($story->subheadline) ?></p>
+                        </div>
+                    <?php } ?>
+                </div>
+            </div>
+
+            <!-- Example 3: Category sections with nested loops -->
+            <div class="width-12"><h2>Example 3: Stories by category</h2></div>
 
             <?php foreach ($categories as $category) { ?>
                 <div class="width-12">
@@ -51,8 +76,8 @@ try {
                 <?php } ?>
             <?php } ?>
 
-            <!-- Example 3: Alternating spotlight per category -->
-            <div class="width-12"><h2>Example 3: Alternating spotlight per category</h2></div>
+            <!-- Example 4: Alternating spotlight per category -->
+            <div class="width-12"><h2>Example 4: Alternating spotlight per category</h2></div>
 
             <?php foreach ($categories as $cat_index => $category): ?>
                 <?php
