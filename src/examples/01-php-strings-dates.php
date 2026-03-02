@@ -27,7 +27,7 @@ $categories = Category::findAll();
                 <p>Database datetime values are strings like <code>"2025-03-15 14:30:00"</code>. Use <code>strtotime()</code> to convert them to a Unix timestamp, then <code>date()</code> to format them however you want. Common format characters: <code>F</code> = full month, <code>M</code> = short month, <code>j</code> = day, <code>Y</code> = 4-digit year, <code>g:i A</code> = time with AM/PM.</p>
             </div>
 
-            <?php foreach (array_slice($stories, 0, 4) as $story): ?>
+            <?php foreach (array_slice($stories, 0, 4) as $story) { ?>
                 <div class="width-6">
                     <h4><?= htmlspecialchars($story->headline) ?></h4>
                     <p>
@@ -36,7 +36,7 @@ $categories = Category::findAll();
                         With time: <strong><?= date("M j, Y \a\\t g:i A", strtotime($story->created_at)) ?></strong>
                     </p>
                 </div>
-            <?php endforeach; ?>
+            <?php } ?>
 
             <!-- 3. Truncating -->
             <div class="width-12"><h2>3. Truncating with substr and strlen</h2></div>
