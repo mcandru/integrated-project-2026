@@ -33,7 +33,20 @@ The sample data in `src/sql/news.sql` is loaded automatically when the container
 
 Use the [Excel to CSV converter](https://gisthost.github.io/?7c1b1122c676a2efa7aeb680aec74629) to export each sheet from your spreadsheet as a separate CSV file.
 
-### 2. Import into PHPMyAdmin
+### 2. Delete the existing sample data
+
+Before importing your own data, delete the existing rows. Open PHPMyAdmin at **http://localhost:8081**, select the `news_db` database, and run the following in the **SQL tab**:
+
+```sql
+DELETE FROM stories;
+DELETE FROM authors;
+DELETE FROM categories;
+DELETE FROM locations;
+```
+
+**The deletion order matters.** `stories` must be deleted first because it has foreign keys referencing the other three tables. If you try to delete `authors`, `categories`, or `locations` first, MySQL will reject the deletion.
+
+### 3. Import into PHPMyAdmin
 
 Open PHPMyAdmin at **http://localhost:8081**, select the `news_db` database, and import each CSV using the Import tab.
 
@@ -46,7 +59,7 @@ Open PHPMyAdmin at **http://localhost:8081**, select the `news_db` database, and
 3. `locations`
 4. `stories`
 
-### 3. Save your database
+### 4. Save your database
 
 Export your database so it can be restored on another machine:
 
